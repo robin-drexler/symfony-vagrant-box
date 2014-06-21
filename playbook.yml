@@ -18,6 +18,7 @@
       - php5-gd
       - sendmail
       - unzip
+      - python-mysqldb
 
   -
     name: remove /var/www
@@ -25,8 +26,22 @@
   -
     name: symlink vagrant folder to apache root
     action: file src=/vagrant dest=/var/www state=link
-  -
-    name: start apache2
-    action: service name=apache2 state=running enabled=yes
+    notify:
+      - restart mysql
 
+  - 
+    name: add mysql user
+    action: mysql_user name=symfony password=symfony priv=*.*:ALL state=present
+    notify:
+      - restart mysql
+
+
+  handlers:
+  -
+    name: restart mysql
+    action: service name=mysql state=restarted enabled=yes
+
+  -
+    name: restart apache2
+    action: service name=apache2 state=restarted enabled=yes
 
