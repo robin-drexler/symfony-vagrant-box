@@ -1,4 +1,15 @@
-# Prerequisite
+# CAUTION: WIP
+
+# What?
+Vagrant box to get symfony projects up and running for local development.
+Current Setup:
+
+ * Ubuntu 12.04
+ * php 5.3
+ * mysql
+ * apache2
+
+# Prerequisites
 
 Have [vagrant](http://www.vagrantup.com/) and [ansible](http://www.ansible.com/home) installed.
 
