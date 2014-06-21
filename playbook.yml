@@ -1,0 +1,32 @@
+---
+- 
+  hosts: all
+  sudo: true
+  tasks:
+  - 
+    name: Install packages
+    action: apt name={{ item }} state=present update_cache=true
+    with_items:
+      - apache2
+      - mysql-server
+      - mysql-client
+      - php5
+      - php5-mysql
+      - php-apc
+      - php5-xmlrpc
+      - php-soap
+      - php5-gd
+      - sendmail
+      - unzip
+
+  -
+    name: remove /var/www
+    action: file path=/var/www state=absent 
+  -
+    name: symlink vagrant folder to apache root
+    action: file src=/vagrant dest=/var/www state=link
+  -
+    name: start apache2
+    action: service name=apache2 state=running enabled=yes
+
+
