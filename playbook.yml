@@ -20,20 +20,24 @@
       - unzip
       - python-mysqldb
 
+
+  - 
+    name: apache php ini
+    action: template src=templates/etc/php5/apache2/php.ini.j2 dest=/etc/php5/apache2/php.ini 
+
   -
     name: remove /var/www
     action: file path=/var/www state=absent 
   -
     name: symlink vagrant folder to apache root
     action: file src=/vagrant dest=/var/www state=link
-    notify:
-      - restart mysql
+    notify: restart apache2
+
 
   - 
     name: add mysql user
     action: mysql_user name=symfony password=symfony priv=*.*:ALL state=present
-    notify:
-      - restart mysql
+    notify: restart mysql
 
 
   handlers:
